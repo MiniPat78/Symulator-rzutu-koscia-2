@@ -43,3 +43,27 @@ def tryb_gry(typ_kosci, prog_zwyciestwa):
         "historia_rzutow": historia_rzutow,
         "koncowa_suma": suma_punktow
     }
+    
+if __name__ == "__main__":
+    print("=" * 40)
+    print(" WITAJ W SYMULATORZE RZUTU KOŚCIĄ! ")
+    print("=" * 40)
+    
+    try:
+        wybrana_kosc = int(input(f"Wybierz kość z dostępnych {DOZWOLONE_KOSCI}: "))
+        wybrany_prog = int(input("Podaj próg punktów do wygranej (np. 50): "))
+        
+        print("\nRozpoczynam grę...")
+        
+        wynik = tryb_gry(wybrana_kosc, wybrany_prog)
+        
+        print("-" * 40)
+        print("WYNIKI GRY:")
+        print(f"Liczba rund: {wynik['liczba_rund']}")
+        print(f"Historia rzutów: {wynik['historia_rzutow']}")
+        print(f"Końcowa suma punktów: {wynik['koncowa_suma']}")
+        print("-" * 40)
+        
+    except ValueError as e:
+        print(f"\nBłąd: {e}")
+        print("Uruchom program ponownie i podaj poprawne dane (tylko liczby całkowite).")
