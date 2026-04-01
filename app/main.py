@@ -1,30 +1,45 @@
 def interaktywne_menu():
-    """Główna pętla gry pozwalająca na interaktywne rzucanie kośćmi."""
-    print("\n" + "="*30)
-    print(" WITAJ W SYMULATORZE KOŚCI ")
-    print("="*30)
+    print("\n" + "="*40)
+    print(" PROFESJONALNY SYMULATOR KOŚCI RPG ")
+    print("="*40)
     
     while True:
-        print("\nDostępne kości: 4, 6, 20")
-        wybor = input("Którą kością rzucamy? (wpisz liczbę lub 'koniec'): ").strip().lower()
+        print("\n[1] Pojedynczy rzut")
+        print("[2] Symulacja masowa + Statystyki")
+        print("[0] Wyjście")
+        
+        tryb = input("\nWybierz opcję: ").strip()
 
-        if wybor == 'koniec':
-            print("\n[!] Zamykanie symulatora. Do widzenia!")
+        if tryb == '0':
+            print("Zamykanie... Powodzenia na sesji RPG!")
             break
 
-        if wybor in ['4', '6', '20']:
-            kod_kosci = f"K{wybor}"
+        if tryb in ['1', '2']:
+            kosc = input("Wybierz kość (4, 6, 20): ").strip()
+            if kosc not in ['4', '6', '20']:
+                print("BŁĄD: Obsługujemy tylko kości 4, 6 i 20!")
+                continue
             
-            try:
+            kod_kosci = f"K{kosc}"
+
+            if tryb == '1':
                 wynik = rzut_koscia(kod_kosci)
+                print(f"\n>>> WYNIK RZUTU: [ {wynik} ]")
+
+            elif tryb == '2':
+                ile = int(input("Ile rzutów wykonać w symulacji? "))
+                wyniki = symulacja_masowa(kod_kosci, ile)
                 
-                print("-" * 20)
-                print(f"  WYLOSOWANO: [ {wynik} ]")
-                print("-" * 20)
-            except Exception as e:
-                print(f"Błąd podczas losowania: {e}")
+                stats = oblicz_statystyki(wyniki)
+                
+                print(f"\n--- WYNIKI SYMULACJI ({ile} rzutów) ---")
+                print(f"Średnia: {stats['srednia']:.2f}")
+                print(f"Minimum: {stats['min']}")
+                print(f"Maximum: {stats['max']}")
+                print(f"Historia (pierwsze 10 rzutów): {wyniki[:10]}...")
+
         else:
-            print(">>> BŁĄD: Wybierz 4, 6 lub 20. Jeśli chcesz wyjść, wpisz 'koniec'.")
+            print("Niepoprawny wybór, spróbuj ponownie.")
 
 if __name__ == "__main__":
     interaktywne_menu()
