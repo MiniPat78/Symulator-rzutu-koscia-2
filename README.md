@@ -10,8 +10,10 @@
 Aplikacja napisana w języku Python symulująca rzuty różnymi typami kości (np. k4, k6, k20). Program posiada zaimplementowany tryb gry, tryb masowej symulacji oraz moduł zbierania i obliczania statystyk rzutów (suma, średnia, wartości skrajne). 
 
 
-## Instrukcja uruchomienia lokalnego
-
-1. **Pobranie projektu:** Kliknij zielony przycisk **'Code'** na GitHubie, wybierz **'Download ZIP'** i rozpakuj archiwum na dysku.
-2. **Instalacja dodatków:** Otwórz terminal (Wiersz poleceń na Windows lub Konsolę na Mac/Linux) w folderze z projektem i wpisz: `pip install -r requirements.txt`
-3. **Uruchomienie testów:** Aby sprawdzić, czy wszystko działa poprawnie, wpisz w tym samym oknie: `pytest`
+## Jak uruchomić?
+1. Zainstaluj wymagane biblioteki:
+   pip install -r requirements.txt
+2. Uruchom testy:
+   python -m pytest
+3. Uruchom aplikację:
+   python -m app.main
