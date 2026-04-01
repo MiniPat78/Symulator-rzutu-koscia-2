@@ -1,37 +1,45 @@
 import random
 
-class DiceSimulator:
-    def __init__(self):
-        self.history = []
+DOZWOLONE_KOSCI = [4, 6, 20]
 
-    def roll_dice(self, sides=6, num_dice=1):
-        """Podstawowy rzut wybraną liczbą kości o określonej liczbie ścianek."""
-        if sides < 2 or num_dice < 1:
-            raise ValueError("Nieprawidłowe parametry kości")
+def rzut_koscia(typ_kosci):
+    """Symuluje pojedynczy rzut kością (K4, K6 lub K20)."""
+    if typ_kosci not in DOZWOLONE_KOSCI:
+        raise ValueError(f"Niedozwolony typ kości. Wybierz jedną z: {DOZWOLONE_KOSCI}")
+    return random.randint(1, typ_kosci)
+
+def oblicz_statystyki(wyniki):
+    """Oblicza sumę, średnią oraz wartości skrajne (min, max) dla rzutów."""
+    if not wyniki:
+        return {"suma": 0, "srednia": 0.0, "min": None, "max": None}
+    return {
+        "suma": sum(wyniki),
+        "srednia": round(sum(wyniki) / len(wyniki), 2),
+        "min": min(wyniki),
+        "max": max(wyniki)
+    }
+
+def symulacja_masowa(typ_kosci, liczba_rzutow):
+    """Przeprowadza masową symulację rzutów."""
+    if liczba_rzutow <= 0:
+        raise ValueError("Liczba rzutów musi być większa niż 0.")
+    return [rzut_koscia(typ_kosci) for _ in range(liczba_rzutow)]
+
+def tryb_gry(typ_kosci, prog_zwyciestwa):
+    """
+    Tryb gry: rzucasz wybraną kością, aż suma Twoich rzutów 
+    osiągnie lub przekroczy wyznaczony próg zwycięstwa.
+    """
+    historia_rzutow = []
+    suma_punktow = 0
+    
+    while suma_punktow < prog_zwyciestwa:
+        wynik = rzut_koscia(typ_kosci)
+        historia_rzutow.append(wynik)
+        suma_punktow += wynik
         
-        rolls = [random.randint(1, sides) for _ in range(num_dice)]
-        self.history.extend(rolls)
-        return rolls
-
-    def get_statistics(self):
-        """Zwraca statystyki ze wszystkich dotychczasowych rzutów."""
-        if not self.history:
-            return {"total_rolls": 0, "message": "Brak historii rzutów."}
-        
-        return {
-            "total_rolls": len(self.history),
-            "sum": sum(self.history),
-            "average": round(sum(self.history) / len(self.history), 2),
-            "min": min(self.history),
-            "max": max(self.history)
-        }
-
-    def simulate(self, sides=6, num_rolls=100):
-        """Tryb symulacji: masowe rzuty do testów statystycznych."""
-        return self.roll_dice(sides, num_rolls)
-
-if __name__ == "__main__":
-    sim = DiceSimulator()
-    print("Rzut 2x k6:", sim.roll_dice(sides=6, num_dice=2))
-    print("Rzut 1x k20 (krytyk?):", sim.roll_dice(sides=20, num_dice=1))
-    print("Statystyki:", sim.get_statistics())
+    return {
+        "liczba_rund": len(historia_rzutow),
+        "historia_rzutow": historia_rzutow,
+        "koncowa_suma": suma_punktow
+    }
