@@ -17,3 +17,5 @@ Aplikacja napisana w języku Python symulująca rzuty różnymi typami kości (n
    python -m pytest
 3. Uruchom aplikację:
    python -m app.main
+
+test
