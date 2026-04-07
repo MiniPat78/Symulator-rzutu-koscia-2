@@ -18,4 +18,4 @@ Aplikacja napisana w języku Python symulująca rzuty różnymi typami kości (n
 3. Uruchom aplikację:
    python -m app.main
 
-test
+![CI](https://github.com/MiniPat78/Symulator-rzutu-koscia-2/actions/workflows/ci.yml/badge.svg)
